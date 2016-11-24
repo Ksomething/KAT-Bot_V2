@@ -12,7 +12,7 @@ const int sensor1_echo = 4;
 const int sensor2_trig = 24;
 const int sensor2_echo = 2;
 const int sensor3_trig = 26;
-const int sensor3_echo = 3;
+const int sensor3_echo = 12;
 
 long distance1 = 0;
 long distance2 = 0;
