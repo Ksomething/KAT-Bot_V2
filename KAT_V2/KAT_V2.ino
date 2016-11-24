@@ -1,3 +1,12 @@
+// LEFT Motor
+#define motorA1 54
+#define motorA2 52
+#define motorAS 7
+// RIGHT Motor
+#define motorB1 50
+#define motorB2 48
+#define motorBS 6
+
 const int sensor1_trig = 28;
 const int sensor1_echo = 4;
 const int sensor2_trig = 24;
@@ -13,6 +22,13 @@ long duration = 0;
 void setup() {
   // put your setup code here, to run onsce:
   Serial.begin(9600);
+  pinMode(motorA1, OUTPUT);
+  pinMode(motorA2, OUTPUT);
+  pinMode(motorAS, OUTPUT);
+  pinMode(motorB1, OUTPUT);
+  pinMode(motorB2, OUTPUT);
+  pinMode(motorBS, OUTPUT);
+  
   pinMode(sensor1_trig, OUTPUT);
   pinMode(sensor1_echo, INPUT);
   pinMode(sensor2_trig, OUTPUT);
@@ -38,8 +54,11 @@ void loop() {
   Serial.print("Sensor 3 - Distance: ");
   Serial.print(distance3);
   Serial.println("cm");
+
+  MoveForward(130);
 }
 
+// Sensor Function
 void DetectSensor(int sensor_trig, int sensor_echo) {
   
   digitalWrite(sensor_trig, LOW);
@@ -51,34 +70,47 @@ void DetectSensor(int sensor_trig, int sensor_echo) {
   duration = pulseIn(sensor_echo, HIGH);
 }
 
-/*
-void DetectSensor2() {
-  
-  digitalWrite(sensor2_trig, LOW);
-  delayMicroseconds(2);
-  digitalWrite(sensor2_trig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(sensor2_trig, LOW);
-  duration2 = pulseIn(sensor2_echo, HIGH);
-  distance2 = (duration2/2) / 29.1;
+// Functions for motors and direction
+void MoveForward(int spd) {
 
-  Serial.print("Sensor 2 - Distance: ");
-  Serial.print(distance2);
-  Serial.println("cm");
+  analogWrite(motorAS, spd);
+  digitalWrite(motorA1, LOW);
+  digitalWrite(motorA2, HIGH);
+
+  analogWrite(motorBS, spd);
+  digitalWrite(motorB1, LOW);
+  digitalWrite(motorB2, HIGH);
 }
-void DetectSensor3() {
-  
-  digitalWrite(sensor3_trig, LOW);
-  delayMicroseconds(2);
-  digitalWrite(sensor3_trig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(sensor3_trig, LOW);
-  duration3 = pulseIn(sensor3_echo, HIGH);
-  distance3 = (duration3/2) / 29.1;
 
-  Serial.print("Sensor 3 - Distance: ");
-  Serial.print(distance3);
-  Serial.println("cm");
+void MoveBack(int spd) {
+
+  analogWrite(motorAS, spd);
+  digitalWrite(motorA1, HIGH);
+  digitalWrite(motorA2, LOW);
+
+  analogWrite(motorBS, spd);
+  digitalWrite(motorB1, HIGH);
+  digitalWrite(motorB2, LOW);
 }
-*/
 
+void RotateLeftk(int spd) {
+
+  analogWrite(motorAS, spd);
+  digitalWrite(motorA1, HIGH);
+  digitalWrite(motorA2, LOW);
+
+  analogWrite(motorBS, spd);
+  digitalWrite(motorB1, LOW);
+  digitalWrite(motorB2, HIGH);
+}
+
+void RotateRight(int spd) {
+
+  analogWrite(motorAS, spd);
+  digitalWrite(motorA1, LOW);
+  digitalWrite(motorA2, HIGH);
+
+  analogWrite(motorBS, spd);
+  digitalWrite(motorB1, HIGH);
+  digitalWrite(motorB2, LOW);
+}
