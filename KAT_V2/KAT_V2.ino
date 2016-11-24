@@ -1,9 +1,9 @@
-#define sensor1_trig 28
-#define sensor1_echo 4
-#define sensor2_trig 24
-#define sensor2_echo 2
-#define sensor3_trig 26
-#define sensor3_echo 3
+const int sensor1_trig = 28;
+const int sensor1_echo = 4;
+const int sensor2_trig = 24;
+const int sensor2_echo = 2;
+const int sensor3_trig = 26;
+const int sensor3_echo = 3;
 
 long distance1 = 0;
 long distance2 = 0;
@@ -17,9 +17,8 @@ void DetectSensor2();
 void DetectSensor3();
 
 void setup() {
-  // put your setup code here, to run once:
+  // put your setup code here, to run onsce:
   Serial.begin(9600);
-
   pinMode(sensor1_trig, OUTPUT);
   pinMode(sensor1_echo, INPUT);
   pinMode(sensor2_trig, OUTPUT);
@@ -29,14 +28,13 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   DetectSensor3();
 }
 
-void DetectSensor1() {
+void DetectSensor() {
   
   digitalWrite(sensor1_trig, LOW);
-  delayMicroseconds(5);
+  delayMicroseconds(2);
   digitalWrite(sensor1_trig, HIGH);
   delayMicroseconds(10);
   digitalWrite(sensor1_trig, LOW);
@@ -51,7 +49,7 @@ void DetectSensor1() {
 void DetectSensor2() {
   
   digitalWrite(sensor2_trig, LOW);
-  delayMicroseconds(5);
+  delayMicroseconds(2);
   digitalWrite(sensor2_trig, HIGH);
   delayMicroseconds(10);
   digitalWrite(sensor2_trig, LOW);
@@ -65,7 +63,7 @@ void DetectSensor2() {
 void DetectSensor3() {
   
   digitalWrite(sensor3_trig, LOW);
-  delayMicroseconds(5);
+  delayMicroseconds(2);
   digitalWrite(sensor3_trig, HIGH);
   delayMicroseconds(10);
   digitalWrite(sensor3_trig, LOW);
