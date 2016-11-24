@@ -1,5 +1,5 @@
 // LEFT Motor
-#define motorA1 54
+#define motorA1 46
 #define motorA2 52
 #define motorAS 7
 // RIGHT Motor
@@ -18,6 +18,9 @@ long distance1 = 0;
 long distance2 = 0;
 long distance3 = 0;
 long duration = 0;
+
+int a_speed = 50;
+int b_speed = 50;
 
 void setup() {
   // put your setup code here, to run onsce:
@@ -53,9 +56,25 @@ void loop() {
   Serial.println("cm");
   Serial.print("Sensor 3 - Distance: ");
   Serial.print(distance3);
-  Serial.println("cm");
+  Serial.println("cm");   MoveForward();
+  
+ /* if (distance2 <= 15 and distance3 <=15 and distance1 > 15){
+    MoveForward(130);
+    }else if (distance2 <= 15 and distance3 > 15 and distance1 > 15){
+      RotateRight(130);
+    }else if (distance2 <= 15 and distance3 > 15 and distance1 <= 15){
+        RotateRight(130);
+    }
 
-  MoveForward(130);
+  if (distance2 > 15 and distance3 <= 15 and distance1 > 15){
+      MoveForward(130);
+    }else if (distance2 > 15 and distance3 <= 15 and distance1 <= 15){
+        RotateLeft(130);
+     }
+
+   if (distance2 <= 15 and distance3 <= 15 and distance1 <= 15){
+        RotateRight(130);
+      }  */
 }
 
 // Sensor Function
@@ -71,46 +90,63 @@ void DetectSensor(int sensor_trig, int sensor_echo) {
 }
 
 // Functions for motors and direction
-void MoveForward(int spd) {
+void MoveForward() {
 
-  analogWrite(motorAS, spd);
+  dontHit();
+  analogWrite(motorAS, a_speed);
   digitalWrite(motorA1, LOW);
   digitalWrite(motorA2, HIGH);
 
-  analogWrite(motorBS, spd);
+  analogWrite(motorBS, b_speed);
   digitalWrite(motorB1, LOW);
   digitalWrite(motorB2, HIGH);
+  dontHit();
 }
 
 void MoveBack(int spd) {
 
-  analogWrite(motorAS, spd);
+  analogWrite(motorAS, a_speed);
   digitalWrite(motorA1, HIGH);
   digitalWrite(motorA2, LOW);
 
-  analogWrite(motorBS, spd);
+  analogWrite(motorBS, b_speed);
   digitalWrite(motorB1, HIGH);
   digitalWrite(motorB2, LOW);
 }
 
-void RotateLeftk(int spd) {
+void RotateLeft(int spd) {
 
-  analogWrite(motorAS, spd);
+  analogWrite(motorAS, a_speed);
   digitalWrite(motorA1, HIGH);
   digitalWrite(motorA2, LOW);
 
-  analogWrite(motorBS, spd);
+  analogWrite(motorBS, b_speed);
   digitalWrite(motorB1, LOW);
   digitalWrite(motorB2, HIGH);
 }
 
 void RotateRight(int spd) {
 
-  analogWrite(motorAS, spd);
+  analogWrite(motorAS, a_speed);
   digitalWrite(motorA1, LOW);
   digitalWrite(motorA2, HIGH);
 
-  analogWrite(motorBS, spd);
+  analogWrite(motorBS, b_speed);
   digitalWrite(motorB1, HIGH);
   digitalWrite(motorB2, LOW);
 }
+
+void dontHit(){ 
+  int dl = distance2;
+  int dr = distance3;
+  if (dl > dr){
+    b_speed = 160; 
+  } else if (dr > dl){
+    a_speed = 160;
+  }else{
+    b_speed = 50;
+    a_speed = 50;
+  }
+}
+
+
