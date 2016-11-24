@@ -8,13 +8,7 @@ const int sensor3_echo = 3;
 long distance1 = 0;
 long distance2 = 0;
 long distance3 = 0;
-long duration1 = 0;
-long duration2 = 0;
-long duration3 = 0;
-
-void DetectSensor();
-void DetectSensor2();
-void DetectSensor3();
+long duration = 0;
 
 void setup() {
   // put your setup code here, to run onsce:
@@ -28,29 +22,12 @@ void setup() {
 }
 
 void loop() {
-  DetectSensor();
-}
-
-void DetectSensor() {
-  
-  digitalWrite(sensor1_trig, LOW);
-  digitalWrite(sensor2_trig, LOW);
-  digitalWrite(sensor3_trig, LOW);
-  delayMicroseconds(2);
-  digitalWrite(sensor1_trig, HIGH);
-  digitalWrite(sensor2_trig, HIGH);
-  digitalWrite(sensor3_trig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(sensor1_trig, LOW);
-  digitalWrite(sensor2_trig, LOW);
-  digitalWrite(sensor3_trig, LOW);
-  
-  duration1 = pulseIn(sensor1_echo, HIGH);
-  distance1 = (duration1/2) / 29.1;
-  duration2 = pulseIn(sensor2_echo, HIGH);
-  distance2 = (durarion2/2) / 29.1;
-  duration3 = pulseIn(sensor3_echo, HIGH);
-  distance3 = (duration3/2) / 29.1;
+  DetectSensor(sensor1_trig, sensor1_echo);
+  distance1 = (duration/2) / 29.1;
+  DetectSensor(sensor2_trig, sensor2_echo);
+  distance2 = (duration/2) / 29.1;
+  DetectSensor(sensor3_trig, sensor3_echo);
+  distance3 = (duration/2) / 29.1;
 
   Serial.print("Sensor 1 - Distance: ");
   Serial.print(distance1);
@@ -63,6 +40,18 @@ void DetectSensor() {
   Serial.println("cm");
 }
 
+void DetectSensor(int sensor_trig, int sensor_echo) {
+  
+  digitalWrite(sensor_trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(sensor_trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(sensor_trig, LOW);
+  
+  duration = pulseIn(sensor_echo, HIGH);
+}
+
+/*
 void DetectSensor2() {
   
   digitalWrite(sensor2_trig, LOW);
@@ -91,3 +80,5 @@ void DetectSensor3() {
   Serial.print(distance3);
   Serial.println("cm");
 }
+*/
+
